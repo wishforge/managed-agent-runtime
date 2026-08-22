@@ -8,7 +8,9 @@ from .core import (
     InvalidTransition,
     Run,
     RunState,
+    RecoveryRecord,
     RuntimeStore,
+    UnknownEvidence,
 )
 
 __all__ = [
@@ -21,5 +23,7 @@ __all__ = [
     "InvalidTransition",
     "Run",
     "RunState",
+    "RecoveryRecord",
     "RuntimeStore",
+    "UnknownEvidence",
 ]
