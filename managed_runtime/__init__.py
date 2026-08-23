@@ -20,6 +20,18 @@ from .execution_extension import (
     ExecutionObservation,
     ExecutionResult,
 )
+from .operation_recovery import (
+    Evidence,
+    EvidenceClassification,
+    EvidenceFreshness,
+    EvidenceScope,
+    Operation,
+    OperationOutcome,
+    RetryAdmission,
+    RetryDecision,
+    RetryPolicy,
+    decide_retry_admission,
+)
 
 __all__ = [
     "Attempt",
@@ -40,4 +52,14 @@ __all__ = [
     "ExecutionIntent",
     "ExecutionObservation",
     "ExecutionResult",
+    "Evidence",
+    "EvidenceClassification",
+    "EvidenceFreshness",
+    "EvidenceScope",
+    "Operation",
+    "OperationOutcome",
+    "RetryAdmission",
+    "RetryDecision",
+    "RetryPolicy",
+    "decide_retry_admission",
 ]
