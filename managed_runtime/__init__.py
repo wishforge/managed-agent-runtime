@@ -12,6 +12,14 @@ from .core import (
     RuntimeStore,
     UnknownEvidence,
 )
+from .execution_extension import (
+    Correlation,
+    ExecutionExtension,
+    ExecutionHandle,
+    ExecutionIntent,
+    ExecutionObservation,
+    ExecutionResult,
+)
 
 __all__ = [
     "Attempt",
@@ -26,4 +34,10 @@ __all__ = [
     "RecoveryRecord",
     "RuntimeStore",
     "UnknownEvidence",
+    "Correlation",
+    "ExecutionExtension",
+    "ExecutionHandle",
+    "ExecutionIntent",
+    "ExecutionObservation",
+    "ExecutionResult",
 ]
