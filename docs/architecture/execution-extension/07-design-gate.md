@@ -10,7 +10,7 @@
 
 ## C. Supervisor boundary
 
-属于 Supervisor：desired-vs-actual reconciliation、restart/new Attempt、UNKNOWN resolution、verification/compensation orchestration、human gate、cleanup 与 termination。
+属于 Supervisor：desired-vs-actual reconciliation，以及对 M3 已记录 decision 的 restart/new Attempt、verification/compensation、human gate、cleanup 与 termination orchestration。Supervisor 不拥有 recovery verdict，也不执行 live provider primitive。
 
 ## D. Durable entities
 
@@ -31,7 +31,8 @@ UNKNOWN != FAILURE
 receipt != execution result
 verification precedes unsafe retry
 compensation is conditional, not universal
-Supervisor owns reconciliation
+M1 persists recovery facts; M3 decides what recovery means
+Supervisor owns reconciliation orchestration
 ```
 
 ## F. Isolation

@@ -22,7 +22,7 @@ Attempt 表示一次由 Runtime 负责归因的实际 dispatch。它承载开始
 - **retry**：transport/request retry 可留在同一 Attempt 内；Runtime policy retry 建立新的 Attempt。
 - **resume**：恢复 session/history 是 Extension primitive；默认不证明原 Attempt 仍在继续，须由 Runtime 明确归因。
 - **fork**：产生新的 lineage，必须是新的 Attempt（可复制输入和 provenance，不复制 identity）。
-- **crash recovery**：若不能证明原执行边界与 side effects，原 Attempt 进入 UNKNOWN，Supervisor 决定新 Attempt、验证、补偿、人工 gate 或终止。
+- **crash recovery**：若不能证明原执行边界与 side effects，M1 将原 Attempt 及 evidence 持久化为 `UNKNOWN`；M3 决定新 Attempt、验证、补偿、人工 gate 或终止，Supervisor 在实现后负责编排。
 
 ## Binding
 

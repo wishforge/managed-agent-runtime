@@ -14,12 +14,17 @@ observe durable state + execution facts
         ↓
 detect drift / missing fact / stale handle
         ↓
-classify (recoverable | UNKNOWN | terminal)
+submit facts to / consume decision from M3
         ↓
-restart / new Attempt / verify / compensate / terminate
+orchestrate admitted M1 transition and M2 live action
 ```
 
-Supervisor 负责重启决定、reconciliation、UNKNOWN resolution、compensation orchestration 与 termination，并遵守 retry、cleanup、人工审批预算。
+Supervisor 负责 reconciliation，并编排已由 M3 决定的 restart、UNKNOWN resolution、compensation 与 termination action；它遵守 retry、cleanup、人工审批预算，不自行改写 decision semantics。
+
+这里的 `UNKNOWN resolution` 是控制面上的 reconciliation/orchestration；恢复
+事实由 M1 持久化，verification、receipt interpretation 与 recovery policy
+decision 属于 M3。Supervisor 不因此成为 live executor，也不绕过 M1 的
+transition/fence 规则。
 
 ## Cases
 

@@ -41,4 +41,8 @@ Extension 可提供 tool-specific receipt、idempotency key、verification probe
 
 ## Recovery ownership
 
-Runtime 决定 durable outcome、retry admission、human gate 和终止语义；Supervisor 执行 reconciliation、verification、compensation orchestration；Extension 仅执行并报告可观察事实。
+在 milestone decomposition 中，M1 持久化 `UNKNOWN`、evidence 与 recovery
+facts；M3 决定 durable outcome、retry admission、human gate 和终止语义；
+Supervisor 执行 reconciliation、verification/compensation orchestration；
+Extension 仅执行并报告可观察事实。也就是说，Runtime 在系统层面拥有
+recovery semantics，但 M1 的 durable substrate 不等于 M3 的 recovery verdict。

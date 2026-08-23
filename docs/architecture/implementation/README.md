@@ -17,6 +17,7 @@
 4. [04-implementation-order.md](04-implementation-order.md) — 依赖顺序。
 5. [05-test-strategy.md](05-test-strategy.md) — 语义测试策略。
 6. [06-implementation-gate.md](06-implementation-gate.md) — 第一批 production implementation gate。
+7. [07-m1-m2-m3-boundary.md](07-m1-m2-m3-boundary.md) — M1 durable substrate、M2 execution facts、M3 recovery decision 的冻结边界。
 
 ## Phase 7 outcome
 

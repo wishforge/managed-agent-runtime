@@ -18,6 +18,8 @@
 
 **CLOSED WITH IMPLEMENTATION PARAMETER**。`UNKNOWN != FAILURE`；先 verification，再 safe retry、compensation、human gate 或 termination；verification timeout 与 tool-class details 可配置但不能允许 blind retry。
 
+Milestone boundary：M1 持久化 `UNKNOWN`、evidence 与 recovery facts；M3 解释这些事实并作出 recovery decision。
+
 ## Gate E — Execution Extension adapter contract frozen
 
 **CLOSED**。adapter 输入 immutable epoch/intent/policy，输出带 correlation 的 execution facts；adapter 不拥有 Run、Attempt、trust 或 recovery verdict。
@@ -40,4 +42,4 @@ READY FOR IMPLEMENTATION
 
 ## First implementation authorization
 
-只授权 M1 Durable Execution Core：Run、Attempt、Binding Epoch、状态机、durable state、并发 fencing 与 semantic tests。M2–M5、REST、CRD、migration、controller、UI 和 provider adapter 等待各自 milestone gate。
+只授权 M1 Durable Semantic Substrate：Run、Attempt、Binding Epoch、状态机、durable state/history、`UNKNOWN` evidence/recovery facts、并发 fencing 与 semantic tests。M2–M5、REST、CRD、migration、controller、UI 和 provider adapter 等待各自 milestone gate。

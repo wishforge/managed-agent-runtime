@@ -5,17 +5,17 @@
 `DESIGN DECISION`：Run、Attempt、immutable Binding Epoch、Extension facts、Recovery、Artifact trust、Supervisor 的 ownership 与边界已冻结。`IMPLEMENTATION DECISION`：按这些语义依赖实现，不按 API/CRD/controller 的表面层次倒置顺序。
 
 ```text
-Run
-  ↓ owns lineage and Attempt set
-Attempt
-  ↓ fixes one immutable Binding Epoch
-Binding Epoch
-  ↓ authorizes one execution boundary
+M1 Durable Semantic Substrate
+  ├─ Run owns lineage and Attempt set
+  ├─ Attempt fixes one immutable Binding Epoch
+  ├─ Binding Epoch closes stale admission
+  └─ persists state/history/UNKNOWN facts
+        ↓ authorizes one execution boundary
 Execution Extension
   ↓ reports attributed observations
-Observation
+Execution Observation
   ↓ supplies facts, not verdicts
-UNKNOWN / Recovery
+Recovery Decision
   ↓ verifies before retry or compensation
 Artifact
   ↓ records provenance/integrity/trust
@@ -30,8 +30,8 @@ Supervisor
 3. **Binding Epoch third**：Attempt 创建时必须固定执行语义 snapshot；否则 provider/session/capability/isolation mutation 会污染 provenance。
 4. **Concurrency/fencing with M1**：fence 不是后补的数据库优化，而是 identity/state semantics 的一部分；必须与 durable transition 一起实现。
 5. **Execution Extension fourth**：adapter 只能在 Run/Attempt/epoch 已存在后报告可归因 facts；否则 start/observe 无法安全落账。
-6. **UNKNOWN/Recovery fifth**：Recovery 依赖 Attempt state machine、epoch boundary 与 durable observations；在此之前 retry 会把未知副作用误当成未发生。
-7. **Artifact sixth**：先有 producing Attempt/epoch provenance，再加 digest/trust；不能先建“可信 artifact”而没有来源链。
+6. **M3 Recovery Decision sixth**：M1 已提供 `UNKNOWN`/`RESOLVING` 与 durable recovery facts；M3 再消费这些 facts 和 M2 observations，先 verification 再决定 retry、new Attempt、compensation 或 termination。M3 不是 live executor。
+7. **Artifact seventh**：先有 producing Attempt/epoch provenance，再加 digest/trust；不能先建“可信 artifact”而没有来源链。
 8. **Supervisor last**：Supervisor 是这些 durable facts 的 reconciliation consumer；先做它会把 controller/loop 变成事实 owner，违反 boundary。
 
 ## First production slice
@@ -42,5 +42,5 @@ Supervisor
 
 - 不先做 Supervisor：没有 durable state model，它只能猜测 live process。
 - 不先做 Artifact trust：没有 provenance，digest 只能证明 bytes，不能证明来源。
-- 不先做 Recovery：没有 Attempt state machine，UNKNOWN 无法落在正确边界。
+- 不先做 M3 Recovery Decision：没有 M1 durable facts 与 M2 observations，UNKNOWN 无法被安全解释；M1 的 durable UNKNOWN substrate 已属于第一批 core。
 - 不把 Codex/Claude/Pi adapter 与 M1 捆绑：provider facts 不应决定核心 semantics。

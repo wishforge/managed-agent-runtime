@@ -12,13 +12,13 @@
 - 创建稳定的 **Attempt** identity，并保证每个 Attempt 恰属于一个 Run。
 - 创建不可变的 **Binding Epoch**，每个 Attempt 恰引用一个 epoch。
 - 持久化 Runtime semantic state、transition history、outcome 与必要 observation。
-- 执行 Attempt state machine：`PENDING → STARTING → RUNNING/WAITING → terminal`，证据不足进入 `UNKNOWN → RESOLVING`。
+- 由 M1 持久化 Attempt state machine：`PENDING → STARTING → RUNNING/WAITING → terminal`，证据不足进入并保留 `UNKNOWN → RESOLVING` fact；M1 不决定 recovery policy。
 - 以版本/epoch fence 防止 duplicate command、stale writer、stale supervisor 和旧 epoch admission。
 - 通过最小 **Execution Extension adapter** 接入 `start / observe / terminate / inspect`，只接收可归因 facts，不让 adapter 拥有 durable semantics。
 - 保留 `UNKNOWN` 及其原因；重启后可重建并进入 recovery，而不是把 UNKNOWN 改写成 FAILURE。
-- 支持 recovery 的最小 durable record：verification request/result、receipt reference、decision 与新 Attempt lineage。
+- 支持 recovery 的最小 durable substrate：`UNKNOWN` evidence 与 recovery fact history；verification request/result、receipt interpretation、decision 与新 Attempt lineage 属于后续 M3 Recovery Decision。
 - 为 Artifact 保存最小 provenance、integrity evidence 与 trust verdict；不实现通用 artifact store。
-- 提供 Supervisor reconciliation 的语义入口：stale detection、verification、new Attempt、termination；执行编排可先是最小实现。
+- 提供 Supervisor reconciliation 的语义入口：stale detection，以及对 M3 verification、new Attempt、termination decision 的编排；执行编排可先是最小实现。
 
 ## Out of scope
 

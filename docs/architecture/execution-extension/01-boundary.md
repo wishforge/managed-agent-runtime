@@ -28,7 +28,7 @@ Managed Runtime 是 durable execution semantics 的 owner。它定义并持久�
 
 ## Supervisor
 
-Supervisor 是 Managed Runtime 内负责 reconciliation 的控制平面机制。它观察 desired state 与实际执行事实，处理 restart、UNKNOWN resolution、termination 与 compensation orchestration。它不替代 Extension 执行 process/session/tool，也不把一次 transport retry 自动提升为一次新的 durable Attempt。
+Supervisor 是 Managed Runtime 内负责 reconciliation 的控制平面机制。它观察 desired state 与实际执行事实，并编排 M3 作出的 restart、UNKNOWN resolution、termination 与 compensation decision。它不拥有这些 recovery decision，不替代 Extension 执行 process/session/tool，也不把一次 transport retry 自动提升为一次新的 durable Attempt。
 
 ## Boundary rule
 
